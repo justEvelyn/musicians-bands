@@ -12,19 +12,20 @@ describe('Band and Musician Models', () => {
         await db.sync({ force: true });
     })
 
+
     test('can create a Band', async () => {
         
-        const testBand = await Band.create ({
+       testBand = await Band.create ({
             name: '5 seconds of summer',
-            instrument: 'guitar'
+            genre: 'pop'
                 })
            
-        expect(testBand.instrument).toBe('guitar');
+        expect(testBand.genre).toBe('pop');
     })
 
     test('can create a Musician', async () => {
          
-       const testMusician = await Musician.create ({
+        testMusician = await Musician.create ({
         name: 'Bruno',
         instrument: 'guitar'
             })
@@ -32,3 +33,21 @@ describe('Band and Musician Models', () => {
         expect(testMusician.name).toBe('Bruno');
     })
 })
+
+test('Band can have many muscians', async () => {
+
+
+    const testMusician1 = await Musician.create ({
+        name: 'beyonce',
+        instrument: 'piano'
+            })
+          await testBand.addMusician(testMusician)
+           await testBand.addMusicians(testMusician1)
+                
+
+const testy = await testBand.getMusicians()
+
+            
+            expect(testy.length).toBe(2);
+        })
+    
